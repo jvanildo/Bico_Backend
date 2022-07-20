@@ -6,4 +6,4 @@ import { CreateUserController } from "./CreateUserCrontroller";
 const createUser = new CreateUser(userRopsitory)
 const createUserController = new CreateUserController(createUser)
 
-export { createUser, createUserController }
+export { createUser, createUserController,userRopsitory }
