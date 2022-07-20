@@ -1,6 +1,10 @@
 import { User } from "../../../entities/User";
 import { IUserRepository } from "../../../repositories/IUserRepository";
 import { ICreateUserDTO } from "./ICreateUserDTO";
+import nodemailer from 'nodemailer'
+import crypto from 'crypto'
+import { UserRopsitory } from '../../../repositories/implementations/UserRepository/UserRopsitory';
+import { response } from 'express';
 
 export class CreateUser {
   constructor(
@@ -23,4 +27,8 @@ export class CreateUser {
 
     return result
   }
-}
+
+  
+
+  }
+

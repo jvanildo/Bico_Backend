@@ -24,6 +24,7 @@ export class CreateUserController {
         age
       })
 
+
       return res.json(user)
       
     } catch (error) {
@@ -58,51 +59,16 @@ export class forgotPassword {
   constructor(
     private userRopsitory: UserRopsitory
   ) {}
-
   async handle(req: Request, res: Response ) {
-    const { email } = req.body
+    const {email} = req.body
   
     try {
+      if( email!='' ) throw new Error("Informações incorretas")
       
-      const user = await this.userRopsitory.findByEmail(email)
-      
-      const transporter = nodemailer.createTransport({
-        host: "smtp.mailtrap.io",
-        port: 2525,
-        auth: {
-            user: "b3b45e071826af",
-            pass: "da4413dbcba5c6"
-          }
-      })
-      const newPassword = crypto.randomBytes(4).toString('hex')
+      const user = await this.userRopsitory.forgotPassword(email)
 
-      transporter.sendMail({
-        from: 'Administrador <5038d7f65b-c23004+1@inbox.mailtrap.io>',
-        to: email,
-        subject: 'Recuperação de Senha!',
-        html: `<p>Olá, sua nova senha para acessar o sistema é : ${newPassword}<p><br/><a href="AQUI O LINK DO SISTEMA">Sistema<a/>`
 
-      }).then(
-        ()=>{
-          password =>{
-          UserRopsitory.update(user[0].id, {
-            password
-          }).then(
-            () => {
-              return response.status(200).json({message: 'Email sended'})
-            }
-          ).catch(
-            () => {
-              return response.status(404).json({message: 'User not found'})
-            }
-          )
-        }
-      }
-      ).catch(
-        () => {
-          return response.status(404).json({message: 'Fail to send email'})
-        }
-      )
+      return res.json(user)
       
     } catch (error) {
       return res.json({
